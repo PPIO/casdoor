@@ -17,9 +17,18 @@ import LoginPage from "./LoginPage";
 import {authConfig} from "./Auth";
 
 class SelfLoginPage extends React.Component {
+  constructor(props) {
+    super(props);
+
+    const searchs = new URLSearchParams(window.location.search);
+    this.state = {
+      applicationName: searchs.get("appName") || authConfig.appName,
+    };
+  }
+
   render() {
     return (
-      <LoginPage type={"login"} mode={"signin"} applicationName={authConfig.appName} account={this.props.account} {...this.props} />
+      <LoginPage type={"login"} mode={"signin"} applicationName={this.state.applicationName} account={this.props.account} {...this.props} />
     );
   }
 }

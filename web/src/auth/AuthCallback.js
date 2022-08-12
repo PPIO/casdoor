@@ -21,7 +21,7 @@ import {authConfig} from "./Auth";
 import * as Setting from "../Setting";
 import i18next from "i18next";
 
-function post(path, params, method="post") {
+function post(path, params, method = "post") {
 
   // The rest of this code assumes you are not using a library.
   // It can be made less verbose if you use one.
