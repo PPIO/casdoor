@@ -27,16 +27,21 @@ type Permission struct {
 	CreatedTime string `xorm:"varchar(100)" json:"createdTime"`
 	DisplayName string `xorm:"varchar(100)" json:"displayName"`
 
-	Users []string `xorm:"mediumtext" json:"users"`
-	Roles []string `xorm:"mediumtext" json:"roles"`
+	Users   []string `xorm:"mediumtext" json:"users"`
+	Roles   []string `xorm:"mediumtext" json:"roles"`
+	Domains []string `xorm:"mediumtext" json:"domains"`
 
 	Model        string   `xorm:"varchar(100)" json:"model"`
 	ResourceType string   `xorm:"varchar(100)" json:"resourceType"`
 	Resources    []string `xorm:"mediumtext" json:"resources"`
 	Actions      []string `xorm:"mediumtext" json:"actions"`
 	Effect       string   `xorm:"varchar(100)" json:"effect"`
+	IsEnabled    bool     `json:"isEnabled"`
 
-	IsEnabled bool `json:"isEnabled"`
+	Submitter   string `xorm:"varchar(100)" json:"submitter"`
+	Approver    string `xorm:"varchar(100)" json:"approver"`
+	ApproveTime string `xorm:"varchar(100)" json:"approveTime"`
+	State       string `xorm:"varchar(100)" json:"state"`
 }
 
 type PermissionRule struct {
@@ -156,6 +161,16 @@ func (permission *Permission) GetId() string {
 func GetPermissionsByUser(userId string) []*Permission {
 	permissions := []*Permission{}
 	err := adapter.Engine.Where("users like ?", "%"+userId+"%").Find(&permissions)
+	if err != nil {
+		panic(err)
+	}
+
+	return permissions
+}
+
+func GetPermissionsBySubmitter(owner string, submitter string) []*Permission {
+	permissions := []*Permission{}
+	err := adapter.Engine.Desc("created_time").Find(&permissions, &Permission{Owner: owner, Submitter: submitter})
 	if err != nil {
 		panic(err)
 	}

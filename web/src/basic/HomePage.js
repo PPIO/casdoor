@@ -56,12 +56,11 @@ class HomePage extends React.Component {
         if (filename === "/account") {
           filename = "/users";
         }
-        items[i].logo = `https://cdn.casbin.com/static/img${filename}.png`;
+        items[i].logo = `${Setting.StaticBaseUrl}/img${filename}.png`;
         items[i].createdTime = "";
       }
     } else {
       this.state.applications.forEach(application => {
-        console.log(application);
         items.push({
           link: application.homepageUrl, name: application.displayName, organizer: application.description, logo: application.logo, createdTime: "",
         });
