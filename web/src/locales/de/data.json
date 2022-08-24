@@ -98,6 +98,8 @@
   },
   "general": {
     "Action": "Aktion",
+    "Adapter": "Adapter",
+    "Adapter - Tooltip": "Adapter - Tooltip",
     "Add": "Neu",
     "Affiliation URL": "Affiliation-URL",
     "Affiliation URL - Tooltip": "Unique string-style identifier",
@@ -196,6 +198,7 @@
     "Swagger": "Swagger",
     "Sync": "Sync",
     "Syncers": "Syncers",
+    "SysInfo": "SysInfo",
     "Timestamp": "Zeitstempel",
     "Tokens": "Token",
     "URL": "URL",
@@ -343,14 +346,20 @@
   "permission": {
     "Actions": "Aktionen",
     "Actions - Tooltip": "Aktionen - Tooltip",
+    "Admin": "Admin",
+    "Allow": "Allow",
     "Approve time": "Approve time",
     "Approve time - Tooltip": "Approve time - Tooltip",
+    "Approved": "Approved",
     "Approver": "Approver",
     "Approver - Tooltip": "Approver - Tooltip",
+    "Deny": "Deny",
     "Edit Permission": "Berechtigung bearbeiten",
     "Effect": "Effekt",
     "Effect - Tooltip": "Effekt - Tooltip",
     "New Permission": "New Permission",
+    "Pending": "Pending",
+    "Read": "Read",
     "Resource type": "Ressourcentyp",
     "Resource type - Tooltip": "Ressourcentyp - Tooltip",
     "Resources": "Ressourcen",
@@ -358,7 +367,9 @@
     "State": "State",
     "State - Tooltip": "State - Tooltip",
     "Submitter": "Submitter",
-    "Submitter - Tooltip": "Submitter - Tooltip"
+    "Submitter - Tooltip": "Submitter - Tooltip",
+    "TreeNode": "TreeNode",
+    "Write": "Write"
   },
   "product": {
     "Alipay": "Alipay",
@@ -591,6 +602,18 @@
     "Table primary key": "Primärschlüssel der Tabelle",
     "Table primary key - Tooltip": "Primärschlüssel der Tabelle - Tooltip"
   },
+  "system": {
+    "About Casdoor": "About Casdoor",
+    "An Identity and Access Management (IAM) / Single-Sign-On (SSO) platform with web UI supporting OAuth 2.0, OIDC, SAML and CAS": "An Identity and Access Management (IAM) / Single-Sign-On (SSO) platform with web UI supporting OAuth 2.0, OIDC, SAML and CAS",
+    "CPU Usage": "CPU Usage",
+    "Community": "Community",
+    "Get CPU Usage Failed": "Get CPU Usage Failed",
+    "Get Memory Usage Failed": "Get Memory Usage Failed",
+    "Memory Usage": "Memory Usage",
+    "Official Website": "Official Website",
+    "Unknown Version": "Unknown Version",
+    "Version": "Version"
+  },
   "token": {
     "Access token": "Zugangs-Token",
     "Authorization code": "Autorisierungscode",
@@ -634,6 +657,7 @@
     "Link": "Link",
     "Location": "Standort",
     "Location - Tooltip": "Standort - Tooltip",
+    "Managed accounts": "Managed accounts",
     "Modify password...": "Passwort ändern...",
     "New Email": "Neue E-Mail",
     "New Password": "Neues Passwort",

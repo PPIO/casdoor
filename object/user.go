@@ -111,6 +111,11 @@ type User struct {
 
 	Roles       []*Role       `json:"roles"`
 	Permissions []*Permission `json:"permissions"`
+
+	LastSigninWrongTime string `xorm:"varchar(100)" json:"lastSigninWrongTime"`
+	SigninWrongTimes    int    `json:"signinWrongTimes"`
+
+	ManagedAccounts []ManagedAccount `xorm:"managedAccounts blob" json:"managedAccounts"`
 }
 
 type Userinfo struct {
@@ -123,6 +128,13 @@ type Userinfo struct {
 	Avatar      string `json:"picture,omitempty"`
 	Address     string `json:"address,omitempty"`
 	Phone       string `json:"phone,omitempty"`
+}
+
+type ManagedAccount struct {
+	Application string `xorm:"varchar(100)" json:"application"`
+	Username    string `xorm:"varchar(100)" json:"username"`
+	Password    string `xorm:"varchar(100)" json:"password"`
+	SigninUrl   string `xorm:"varchar(200)" json:"signinUrl"`
 }
 
 func GetGlobalUserCount(field, value string) int {
@@ -331,6 +343,12 @@ func GetMaskedUser(user *User) *User {
 	if user.Password != "" {
 		user.Password = "***"
 	}
+
+	if user.ManagedAccounts != nil {
+		for _, manageAccount := range user.ManagedAccounts {
+			manageAccount.Password = "***"
+		}
+	}
 	return user
 }
 
@@ -375,7 +393,8 @@ func UpdateUser(id string, user *User, columns []string, isGlobalAdmin bool) boo
 		columns = []string{
 			"owner", "display_name", "avatar",
 			"location", "address", "region", "language", "affiliation", "title", "homepage", "bio", "score", "tag", "signup_application",
-			"is_admin", "is_global_admin", "is_forbidden", "is_deleted", "hash", "is_default_avatar", "properties", "webauthnCredentials",
+			"is_admin", "is_global_admin", "is_forbidden", "is_deleted", "hash", "is_default_avatar", "properties", "webauthnCredentials", "managedAccounts",
+			"signin_wrong_times", "last_signin_wrong_time",
 		}
 	}
 	if isGlobalAdmin {
@@ -546,4 +565,13 @@ func (user *User) GetId() string {
 
 func isUserIdGlobalAdmin(userId string) bool {
 	return strings.HasPrefix(userId, "built-in/")
+}
+
+func ExtendUserWithRolesAndPermissions(user *User) {
+	if user == nil {
+		return
+	}
+
+	user.Roles = GetRolesByUser(user.GetId())
+	user.Permissions = GetPermissionsByUser(user.GetId())
 }

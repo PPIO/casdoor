@@ -98,6 +98,8 @@
   },
   "general": {
     "Action": "アクション",
+    "Adapter": "Adapter",
+    "Adapter - Tooltip": "Adapter - Tooltip",
     "Add": "追加",
     "Affiliation URL": "アフィリエイトURL",
     "Affiliation URL - Tooltip": "Unique string-style identifier",
@@ -196,6 +198,7 @@
     "Swagger": "Swagger",
     "Sync": "Sync",
     "Syncers": "Syncers",
+    "SysInfo": "システム情報",
     "Timestamp": "タイムスタンプ",
     "Tokens": "トークン",
     "URL": "URL",
@@ -343,14 +346,20 @@
   "permission": {
     "Actions": "アクション",
     "Actions - Tooltip": "アクション → ツールチップ",
+    "Admin": "Admin",
+    "Allow": "Allow",
     "Approve time": "Approve time",
     "Approve time - Tooltip": "Approve time - Tooltip",
+    "Approved": "Approved",
     "Approver": "Approver",
     "Approver - Tooltip": "Approver - Tooltip",
+    "Deny": "Deny",
     "Edit Permission": "権限を編集",
     "Effect": "効果",
     "Effect - Tooltip": "エフェクト - ツールチップ",
     "New Permission": "New Permission",
+    "Pending": "Pending",
+    "Read": "Read",
     "Resource type": "リソースタイプ",
     "Resource type - Tooltip": "リソースタイプ - ツールチップ",
     "Resources": "リソース",
@@ -358,7 +367,9 @@
     "State": "State",
     "State - Tooltip": "State - Tooltip",
     "Submitter": "Submitter",
-    "Submitter - Tooltip": "Submitter - Tooltip"
+    "Submitter - Tooltip": "Submitter - Tooltip",
+    "TreeNode": "TreeNode",
+    "Write": "Write"
   },
   "product": {
     "Alipay": "Alipay",
@@ -591,6 +602,18 @@
     "Table primary key": "テーブルのプライマリキー",
     "Table primary key - Tooltip": "テーブルのプライマリキー - ツールチップ"
   },
+  "system": {
+    "About Casdoor": "About Casdoor",
+    "An Identity and Access Management (IAM) / Single-Sign-On (SSO) platform with web UI supporting OAuth 2.0, OIDC, SAML and CAS": "An Identity and Access Management (IAM) / Single-Sign-On (SSO) platform with web UI supporting OAuth 2.0, OIDC, SAML and CAS",
+    "CPU Usage": "CPU Usage",
+    "Community": "Community",
+    "Get CPU Usage Failed": "Get CPU Usage Failed",
+    "Get Memory Usage Failed": "Get Memory Usage Failed",
+    "Memory Usage": "Memory Usage",
+    "Official Website": "Official Website",
+    "Unknown Version": "Unknown Version",
+    "Version": "Version"
+  },
   "token": {
     "Access token": "アクセストークン",
     "Authorization code": "認証コード",
@@ -634,6 +657,7 @@
     "Link": "リンク",
     "Location": "場所",
     "Location - Tooltip": "場所 → ツールチップ",
+    "Managed accounts": "Managed accounts",
     "Modify password...": "パスワードを変更...",
     "New Email": "新しいメール",
     "New Password": "新しいパスワード",

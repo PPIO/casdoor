@@ -98,6 +98,8 @@
   },
   "general": {
     "Action": "Action",
+    "Adapter": "Adapter",
+    "Adapter - Tooltip": "Adapter - Tooltip",
     "Add": "Ajouter",
     "Affiliation URL": "URL d'affiliation",
     "Affiliation URL - Tooltip": "Unique string-style identifier",
@@ -196,6 +198,7 @@
     "Swagger": "Swagger",
     "Sync": "Sync",
     "Syncers": "Synchronisateurs",
+    "SysInfo": "SysInfo",
     "Timestamp": "Horodatage",
     "Tokens": "Jetons",
     "URL": "URL",
@@ -343,14 +346,20 @@
   "permission": {
     "Actions": "Actions",
     "Actions - Tooltip": "Actions - Info-bulle",
+    "Admin": "Admin",
+    "Allow": "Allow",
     "Approve time": "Approve time",
     "Approve time - Tooltip": "Approve time - Tooltip",
+    "Approved": "Approved",
     "Approver": "Approver",
     "Approver - Tooltip": "Approver - Tooltip",
+    "Deny": "Deny",
     "Edit Permission": "Autorisation d'édition",
     "Effect": "Effet",
     "Effect - Tooltip": "Effet - Infobulle",
     "New Permission": "New Permission",
+    "Pending": "Pending",
+    "Read": "Read",
     "Resource type": "Type de ressource",
     "Resource type - Tooltip": "Type de ressource - infobulle",
     "Resources": "Ressource",
@@ -358,7 +367,9 @@
     "State": "State",
     "State - Tooltip": "State - Tooltip",
     "Submitter": "Submitter",
-    "Submitter - Tooltip": "Submitter - Tooltip"
+    "Submitter - Tooltip": "Submitter - Tooltip",
+    "TreeNode": "TreeNode",
+    "Write": "Write"
   },
   "product": {
     "Alipay": "Alipay",
@@ -591,6 +602,18 @@
     "Table primary key": "Clé primaire de la table",
     "Table primary key - Tooltip": "Clé primaire du tableau - infobulle"
   },
+  "system": {
+    "About Casdoor": "About Casdoor",
+    "An Identity and Access Management (IAM) / Single-Sign-On (SSO) platform with web UI supporting OAuth 2.0, OIDC, SAML and CAS": "An Identity and Access Management (IAM) / Single-Sign-On (SSO) platform with web UI supporting OAuth 2.0, OIDC, SAML and CAS",
+    "CPU Usage": "CPU Usage",
+    "Community": "Community",
+    "Get CPU Usage Failed": "Get CPU Usage Failed",
+    "Get Memory Usage Failed": "Get Memory Usage Failed",
+    "Memory Usage": "Memory Usage",
+    "Official Website": "Official Website",
+    "Unknown Version": "Unknown Version",
+    "Version": "Version"
+  },
   "token": {
     "Access token": "Jeton d'accès",
     "Authorization code": "Code d'autorisation",
@@ -634,6 +657,7 @@
     "Link": "Lier",
     "Location": "Localisation",
     "Location - Tooltip": "Localisation - Infobulle",
+    "Managed accounts": "Managed accounts",
     "Modify password...": "Modifier le mot de passe...",
     "New Email": "Nouvel e-mail",
     "New Password": "Nouveau mot de passe",

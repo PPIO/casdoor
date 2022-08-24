@@ -188,7 +188,19 @@ class PermissionListPage extends BaseListPage {
         sorter: true,
         ...this.getColumnSearchProps("actions"),
         render: (text, record, index) => {
-          return Setting.getTags(text);
+          const tags = text.map((tag, i) => {
+            switch (tag) {
+            case "Read":
+              return i18next.t("permission:Read");
+            case "Write":
+              return i18next.t("permission:Write");
+            case "Admin":
+              return i18next.t("permission:Admin");
+            default:
+              return null;
+            }
+          });
+          return Setting.getTags(tags);
         },
       },
       {
@@ -197,11 +209,21 @@ class PermissionListPage extends BaseListPage {
         key: "effect",
         filterMultiple: false,
         filters: [
-          {text: "Allow", value: "Allow"},
-          {text: "Deny", value: "Deny"},
+          {text: i18next.t("permission:Allow"), value: "Allow"},
+          {text: i18next.t("permission:Deny"), value: "Deny"},
         ],
         width: "120px",
         sorter: true,
+        render: (text, record, index) => {
+          switch (text) {
+          case "Allow":
+            return Setting.getTag("success", i18next.t("permission:Allow"));
+          case "Deny":
+            return Setting.getTag("error", i18next.t("permission:Deny"));
+          default:
+            return null;
+          }
+        },
       },
       {
         title: i18next.t("general:Is enabled"),
@@ -213,6 +235,55 @@ class PermissionListPage extends BaseListPage {
           return (
             <Switch disabled checkedChildren="ON" unCheckedChildren="OFF" checked={text} />
           );
+        },
+      },
+      {
+        title: i18next.t("permission:Submitter"),
+        dataIndex: "submitter",
+        key: "submitter",
+        filterMultiple: false,
+        width: "120px",
+        sorter: true,
+      },
+      {
+        title: i18next.t("permission:Approver"),
+        dataIndex: "approver",
+        key: "approver",
+        filterMultiple: false,
+        width: "120px",
+        sorter: true,
+      },
+      {
+        title: i18next.t("permission:Approve time"),
+        dataIndex: "approveTime",
+        key: "approveTime",
+        filterMultiple: false,
+        width: "120px",
+        sorter: true,
+        render: (text, record, index) => {
+          return Setting.getFormattedDate(text);
+        },
+      },
+      {
+        title: i18next.t("permission:State"),
+        dataIndex: "state",
+        key: "state",
+        filterMultiple: false,
+        filters: [
+          {text: i18next.t("permission:Approved"), value: "Approved"},
+          {text: i18next.t("permission:Pending"), value: "Pending"},
+        ],
+        width: "120px",
+        sorter: true,
+        render: (text, record, index) => {
+          switch (text) {
+          case "Approved":
+            return Setting.getTag("success", i18next.t("permission:Approved"));
+          case "Pending":
+            return Setting.getTag("error", i18next.t("permission:Pending"));
+          default:
+            return null;
+          }
         },
       },
       {
@@ -269,7 +340,7 @@ class PermissionListPage extends BaseListPage {
     }
     this.setState({loading: true});
 
-    const getPermissions = Setting.isAdminUser(this.props.account) ? PermissionBackend.getPermissions : PermissionBackend.getPermissionsBySubmitter;
+    const getPermissions = Setting.isLocalAdminUser(this.props.account) ? PermissionBackend.getPermissions : PermissionBackend.getPermissionsBySubmitter;
     getPermissions("", params.pagination.current, params.pagination.pageSize, field, value, sortField, sortOrder)
       .then((res) => {
         if (res.status === "ok") {

@@ -98,6 +98,8 @@
   },
   "general": {
     "Action": "Действие",
+    "Adapter": "Adapter",
+    "Adapter - Tooltip": "Adapter - Tooltip",
     "Add": "Добавить",
     "Affiliation URL": "URL-адрес партнёра",
     "Affiliation URL - Tooltip": "Unique string-style identifier",
@@ -196,6 +198,7 @@
     "Swagger": "Swagger",
     "Sync": "Sync",
     "Syncers": "Синхронизаторы",
+    "SysInfo": "Информация о системе",
     "Timestamp": "Отметка времени",
     "Tokens": "Жетоны",
     "URL": "URL",
@@ -343,14 +346,20 @@
   "permission": {
     "Actions": "Действия",
     "Actions - Tooltip": "Действия - Подсказка",
+    "Admin": "Admin",
+    "Allow": "Allow",
     "Approve time": "Approve time",
     "Approve time - Tooltip": "Approve time - Tooltip",
+    "Approved": "Approved",
     "Approver": "Approver",
     "Approver - Tooltip": "Approver - Tooltip",
+    "Deny": "Deny",
     "Edit Permission": "Изменить права доступа",
     "Effect": "Эффект",
     "Effect - Tooltip": "Эффект - Подсказка",
     "New Permission": "New Permission",
+    "Pending": "Pending",
+    "Read": "Read",
     "Resource type": "Тип ресурса",
     "Resource type - Tooltip": "Тип ресурса - Подсказка",
     "Resources": "Ресурсы",
@@ -358,7 +367,9 @@
     "State": "State",
     "State - Tooltip": "State - Tooltip",
     "Submitter": "Submitter",
-    "Submitter - Tooltip": "Submitter - Tooltip"
+    "Submitter - Tooltip": "Submitter - Tooltip",
+    "TreeNode": "TreeNode",
+    "Write": "Write"
   },
   "product": {
     "Alipay": "Alipay",
@@ -591,6 +602,18 @@
     "Table primary key": "Основной ключ таблицы",
     "Table primary key - Tooltip": "Основная таблица - Подсказка"
   },
+  "system": {
+    "About Casdoor": "About Casdoor",
+    "An Identity and Access Management (IAM) / Single-Sign-On (SSO) platform with web UI supporting OAuth 2.0, OIDC, SAML and CAS": "An Identity and Access Management (IAM) / Single-Sign-On (SSO) platform with web UI supporting OAuth 2.0, OIDC, SAML and CAS",
+    "CPU Usage": "CPU Usage",
+    "Community": "Community",
+    "Get CPU Usage Failed": "Get CPU Usage Failed",
+    "Get Memory Usage Failed": "Get Memory Usage Failed",
+    "Memory Usage": "Memory Usage",
+    "Official Website": "Official Website",
+    "Unknown Version": "Unknown Version",
+    "Version": "Version"
+  },
   "token": {
     "Access token": "Маркер доступа",
     "Authorization code": "Код авторизации",
@@ -634,6 +657,7 @@
     "Link": "Ссылка",
     "Location": "Местоположение",
     "Location - Tooltip": "Расположение - Подсказка",
+    "Managed accounts": "Managed accounts",
     "Modify password...": "Изменить пароль...",
     "New Email": "Новое письмо",
     "New Password": "Новый пароль",

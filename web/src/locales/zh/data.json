@@ -98,6 +98,8 @@
   },
   "general": {
     "Action": "操作",
+    "Adapter": "适配器",
+    "Adapter - Tooltip": "策略存储的表名",
     "Add": "添加",
     "Affiliation URL": "工作单位URL",
     "Affiliation URL - Tooltip": "工作单位URL",
@@ -196,6 +198,7 @@
     "Swagger": "API文档",
     "Sync": "同步",
     "Syncers": "同步器",
+    "SysInfo": "系统信息",
     "Timestamp": "时间戳",
     "Tokens": "令牌",
     "URL": "链接",
@@ -343,14 +346,20 @@
   "permission": {
     "Actions": "动作",
     "Actions - Tooltip": "授权的动作",
+    "Admin": "管理员权限",
+    "Allow": "允许",
     "Approve time": "审批时间",
     "Approve time - Tooltip": "该授权被审批通过的时间",
+    "Approved": "审批通过",
     "Approver": "审批者",
     "Approver - Tooltip": "审批通过该授权的人",
+    "Deny": "拒绝",
     "Edit Permission": "编辑权限",
     "Effect": "效果",
     "Effect - Tooltip": "允许还是拒绝",
     "New Permission": "添加权限",
+    "Pending": "待审批",
+    "Read": "读权限",
     "Resource type": "资源类型",
     "Resource type - Tooltip": "授权资源的类型",
     "Resources": "资源",
@@ -358,7 +367,9 @@
     "State": "审批状态",
     "State - Tooltip": "该授权现在的状态",
     "Submitter": "申请者",
-    "Submitter - Tooltip": "申请该授权的人"
+    "Submitter - Tooltip": "申请该授权的人",
+    "TreeNode": "树节点",
+    "Write": "写权限"
   },
   "product": {
     "Alipay": "支付宝",
@@ -591,6 +602,18 @@
     "Table primary key": "表主键",
     "Table primary key - Tooltip": "表主键，如id"
   },
+  "system": {
+    "About Casdoor": "关于 Casdoor",
+    "An Identity and Access Management (IAM) / Single-Sign-On (SSO) platform with web UI supporting OAuth 2.0, OIDC, SAML and CAS": "一个支持 OAuth 2.0、OIDC、SAML 和 CAS 的 Web UI 的身份和访问管理 (IAM)/单点登录 (SSO) 平台",
+    "CPU Usage": "CPU使用率",
+    "Community": "社区",
+    "Get CPU Usage Failed": "获取CPU使用率失败",
+    "Get Memory Usage Failed": "获取内存使用率失败",
+    "Memory Usage": "内存使用率",
+    "Official Website": "官方网站",
+    "Unknown Version": "未知版本",
+    "Version": "版本"
+  },
   "token": {
     "Access token": "访问令牌",
     "Authorization code": "授权码",
@@ -634,6 +657,7 @@
     "Link": "绑定",
     "Location": "城市",
     "Location - Tooltip": "居住地址所在的城市",
+    "Managed accounts": "托管账户",
     "Modify password...": "编辑密码...",
     "New Email": "新邮箱",
     "New Password": "新密码",

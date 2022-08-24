@@ -18,6 +18,8 @@ import (
 	"fmt"
 	"regexp"
 	"strings"
+	"time"
+	"unicode"
 
 	"github.com/casdoor/casdoor/cred"
 	"github.com/casdoor/casdoor/util"
@@ -27,6 +29,11 @@ import (
 var (
 	reWhiteSpace     *regexp.Regexp
 	reFieldWhiteList *regexp.Regexp
+)
+
+const (
+	SigninWrongTimesLimit     = 5
+	LastSignWrongTimeDuration = time.Minute * 15
 )
 
 func init() {
@@ -42,10 +49,24 @@ func CheckUserSignup(application *Application, organization *Organization, usern
 	if application.IsSignupItemVisible("Username") {
 		if len(username) <= 1 {
 			return "username must have at least 2 characters"
-		} else if reWhiteSpace.MatchString(username) {
+		}
+		if unicode.IsDigit(rune(username[0])) {
+			return "username cannot start with a digit"
+		}
+		if util.IsEmailValid(username) {
+			return "username cannot be an email address"
+		}
+		if reWhiteSpace.MatchString(username) {
 			return "username cannot contain white spaces"
-		} else if HasUserByField(organization.Name, "name", username) {
+		}
+		if HasUserByField(organization.Name, "name", username) {
 			return "username already exists"
+		}
+		if HasUserByField(organization.Name, "email", email) {
+			return "email already exists"
+		}
+		if HasUserByField(organization.Name, "phone", phone) {
+			return "phone already exists"
 		}
 	}
 
@@ -112,7 +133,32 @@ func CheckUserSignup(application *Application, organization *Organization, usern
 	return ""
 }
 
+func checkSigninErrorTimes(user *User) string {
+	if user.SigninWrongTimes >= SigninWrongTimesLimit {
+		lastSignWrongTime, _ := time.Parse(time.RFC3339, user.LastSigninWrongTime)
+		passedTime := time.Now().UTC().Sub(lastSignWrongTime)
+		seconds := int(LastSignWrongTimeDuration.Seconds() - passedTime.Seconds())
+
+		// deny the login if the error times is greater than the limit and the last login time is less than the duration
+		if seconds > 0 {
+			return fmt.Sprintf("You have entered the wrong password too many times, please wait for %d minutes %d seconds and try again", seconds/60, seconds%60)
+		}
+
+		// reset the error times
+		user.SigninWrongTimes = 0
+
+		UpdateUser(user.GetId(), user, []string{"signin_wrong_times"}, user.IsGlobalAdmin)
+	}
+
+	return ""
+}
+
 func CheckPassword(user *User, password string) string {
+	// check the login error times
+	if msg := checkSigninErrorTimes(user); msg != "" {
+		return msg
+	}
+
 	organization := GetOrganizationByUser(user)
 	if organization == nil {
 		return "organization does not exist"
@@ -122,14 +168,17 @@ func CheckPassword(user *User, password string) string {
 	if credManager != nil {
 		if organization.MasterPassword != "" {
 			if credManager.IsPasswordCorrect(password, organization.MasterPassword, "", organization.PasswordSalt) {
+				resetUserSigninErrorTimes(user)
 				return ""
 			}
 		}
 
 		if credManager.IsPasswordCorrect(password, user.Password, user.PasswordSalt, organization.PasswordSalt) {
+			resetUserSigninErrorTimes(user)
 			return ""
 		}
-		return "password incorrect"
+
+		return recordSigninErrorInfo(user)
 	} else {
 		return fmt.Sprintf("unsupported password type: %s", organization.PasswordType)
 	}

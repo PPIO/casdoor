@@ -189,6 +189,16 @@ class PermissionEditPage extends React.Component {
         </Row>
         <Row style={{marginTop: "20px"}} >
           <Col style={{marginTop: "5px"}} span={(Setting.isMobile()) ? 22 : 2}>
+            {Setting.getLabel(i18next.t("general:Adapter"), i18next.t("general:Adapter - Tooltip"))} :
+          </Col>
+          <Col span={22} >
+            <Input value={this.state.permission.adapter} onChange={e => {
+              this.updatePermissionField("adapter", e.target.value);
+            }} />
+          </Col>
+        </Row>
+        <Row style={{marginTop: "20px"}} >
+          <Col style={{marginTop: "5px"}} span={(Setting.isMobile()) ? 22 : 2}>
             {Setting.getLabel(i18next.t("role:Sub users"), i18next.t("role:Sub users - Tooltip"))} :
           </Col>
           <Col span={22} >
@@ -217,7 +227,7 @@ class PermissionEditPage extends React.Component {
           </Col>
           <Col span={22} >
             <Select virtual={false} mode="tags" style={{width: "100%"}} value={this.state.permission.domains} onChange={(value => {
-              this.updateRoleField("domains", value);
+              this.updatePermissionField("domains", value);
             })}>
               {
                 this.state.permission.domains.map((domain, index) => <Option key={index} value={domain}>{domain}</Option>)
@@ -235,7 +245,8 @@ class PermissionEditPage extends React.Component {
             })}>
               {
                 [
-                  {id: "Application", name: "Application"},
+                  {id: "Application", name: i18next.t("general:Application")},
+                  {id: "TreeNode", name: i18next.t("permission:TreeNode")},
                 ].map((item, index) => <Option key={index} value={item.id}>{item.name}</Option>)
               }
             </Select>
@@ -263,9 +274,9 @@ class PermissionEditPage extends React.Component {
             })}>
               {
                 [
-                  {id: "Read", name: "Read"},
-                  {id: "Write", name: "Write"},
-                  {id: "Admin", name: "Admin"},
+                  {id: "Read", name: i18next.t("permission:Read")},
+                  {id: "Write", name: i18next.t("permission:Write")},
+                  {id: "Admin", name: i18next.t("permission:Admin")},
                 ].map((item, index) => <Option key={index} value={item.id}>{item.name}</Option>)
               }
             </Select>
@@ -281,8 +292,8 @@ class PermissionEditPage extends React.Component {
             })}>
               {
                 [
-                  {id: "Allow", name: "Allow"},
-                  {id: "Deny", name: "Deny"},
+                  {id: "Allow", name: i18next.t("permission:Allow")},
+                  {id: "Deny", name: i18next.t("permission:Deny")},
                 ].map((item, index) => <Option key={index} value={item.id}>{item.name}</Option>)
               }
             </Select>
@@ -348,8 +359,8 @@ class PermissionEditPage extends React.Component {
             })}>
               {
                 [
-                  {id: "Approved", name: "Approved"},
-                  {id: "Pending", name: "Pending"},
+                  {id: "Approved", name: i18next.t("permission:Approved")},
+                  {id: "Pending", name: i18next.t("permission:Pending")},
                 ].map((item, index) => <Option key={index} value={item.id}>{item.name}</Option>)
               }
             </Select>
@@ -360,6 +371,27 @@ class PermissionEditPage extends React.Component {
   }
 
   submitPermissionEdit(willExist) {
+    if (this.state.permission.users.length === 0 && this.state.permission.roles.length === 0) {
+      Setting.showMessage("error", "The users and roles cannot be empty at the same time");
+      return;
+    }
+    // if (this.state.permission.domains.length === 0) {
+    //   Setting.showMessage("error", "The domains cannot be empty");
+    //   return;
+    // }
+    if (this.state.permission.resources.length === 0) {
+      Setting.showMessage("error", "The resources cannot be empty");
+      return;
+    }
+    if (this.state.permission.actions.length === 0) {
+      Setting.showMessage("error", "The actions cannot be empty");
+      return;
+    }
+    if (!Setting.isLocalAdminUser(this.props.account) && this.state.permission.submitter !== this.props.account.name) {
+      Setting.showMessage("error", "A normal user can only modify the permission submitted by itself");
+      return;
+    }
+
     const permission = Setting.deepCopy(this.state.permission);
     PermissionBackend.updatePermission(this.state.organizationName, this.state.permissionName, permission)
       .then((res) => {

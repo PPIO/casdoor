@@ -179,7 +179,7 @@ class LoginPage extends React.Component {
         values["type"] = "saml";
       }
 
-      if (this.state.owner !== null) {
+      if (this.state.owner !== null && this.state.owner !== undefined) {
         values["organization"] = this.state.owner;
       }
 
@@ -505,6 +505,10 @@ class LoginPage extends React.Component {
 
   renderSignedInBox() {
     if (this.props.account === undefined || this.props.account === null) {
+      if (window !== window.parent) {
+        const message = {tag: "Casdoor", type: "SilentSignin", data: "user-not-logged-in"};
+        window.parent.postMessage(message, "*");
+      }
       return null;
     }
     const application = this.getApplicationObj();
@@ -621,6 +625,7 @@ class LoginPage extends React.Component {
           <CountDownInput
             disabled={this.state.username?.length === 0 || !this.state.validEmailOrPhone}
             onButtonClickArgs={[this.state.username, this.state.validEmail ? "email" : "phone", Setting.getApplicationName(application)]}
+            application={application}
           />
         </Form.Item>
       ) : (

@@ -49,6 +49,10 @@ export const OtherProviderInfo = {
       logo: `${StaticBaseUrl}/img/social_huawei.png`,
       url: "https://www.huaweicloud.com/product/msgsms.html",
     },
+    "Mock SMS": {
+      logo: `${StaticBaseUrl}/img/social_default.png`,
+      url: "",
+    },
   },
   Email: {
     "Default": {
@@ -64,6 +68,10 @@ export const OtherProviderInfo = {
     "AWS S3": {
       logo: `${StaticBaseUrl}/img/social_aws.png`,
       url: "https://aws.amazon.com/s3",
+    },
+    "MinIO": {
+      logo: "https://min.io/resources/img/logo.svg",
+      url: "https://min.io/",
     },
     "Aliyun OSS": {
       logo: `${StaticBaseUrl}/img/social_aliyun.png`,
@@ -200,8 +208,16 @@ export function isProviderPrompted(providerItem) {
   return isProviderVisible(providerItem) && providerItem.prompted;
 }
 
+export function isSignupItemPrompted(signupItem) {
+  return signupItem.visible && signupItem.prompted;
+}
+
 export function getAllPromptedProviderItems(application) {
   return application.providers.filter(providerItem => isProviderPrompted(providerItem));
+}
+
+export function getAllPromptedSignupItems(application) {
+  return application.signupItems.filter(signupItem => isSignupItemPrompted(signupItem));
 }
 
 export function getSignupItem(application, itemName) {
@@ -275,6 +291,11 @@ export function hasPromptPage(application) {
     return true;
   }
 
+  const signupItems = getAllPromptedSignupItems(application);
+  if (signupItems.length !== 0) {
+    return true;
+  }
+
   return isAffiliationPrompted(application);
 }
 
@@ -299,6 +320,19 @@ function isProviderItemAnswered(user, application, providerItem) {
   return linkedValue !== undefined && linkedValue !== "";
 }
 
+function isSignupItemAnswered(user, signupItem) {
+  if (user === null) {
+    return false;
+  }
+
+  if (signupItem.name !== "Country/Region") {
+    return true;
+  }
+
+  const value = user["region"];
+  return value !== undefined && value !== "";
+}
+
 export function isPromptAnswered(user, application) {
   if (!isAffiliationAnswered(user, application)) {
     return false;
@@ -307,6 +341,13 @@ export function isPromptAnswered(user, application) {
   const providerItems = getAllPromptedProviderItems(application);
   for (let i = 0; i < providerItems.length; i++) {
     if (!isProviderItemAnswered(user, application, providerItems[i])) {
+      return false;
+    }
+  }
+
+  const signupItems = getAllPromptedSignupItems(application);
+  for (let i = 0; i < signupItems.length; i++) {
+    if (!isSignupItemAnswered(user, signupItems[i])) {
       return false;
     }
   }
@@ -539,7 +580,12 @@ export function getProviderLogoURL(provider) {
     }
     return `${StaticBaseUrl}/img/social_${provider.type.toLowerCase()}.png`;
   } else {
-    return OtherProviderInfo[provider.category][provider.type].logo;
+    const info = OtherProviderInfo[provider.category][provider.type];
+    // avoid crash when provider is not found
+    if (info) {
+      return info.logo;
+    }
+    return "";
   }
 }
 
@@ -603,6 +649,7 @@ export function getProviderTypeOptions(category) {
       [
         {id: "Local File System", name: "Local File System"},
         {id: "AWS S3", name: "AWS S3"},
+        {id: "MinIO", name: "MinIO"},
         {id: "Aliyun OSS", name: "Aliyun OSS"},
         {id: "Tencent Cloud COS", name: "Tencent Cloud COS"},
         {id: "Azure Blob", name: "Azure Blob"},
@@ -810,7 +857,10 @@ export function getTagColor(s) {
 
 export function getTags(tags) {
   const res = [];
-  if (!tags) {return res;}
+  if (!tags) {
+    return res;
+  }
+
   tags.forEach((tag, i) => {
     res.push(
       <Tag color={getTagColor(tag)}>
@@ -819,6 +869,14 @@ export function getTags(tags) {
     );
   });
   return res;
+}
+
+export function getTag(color, text) {
+  return (
+    <Tag color={color}>
+      {text}
+    </Tag>
+  );
 }
 
 export function getApplicationOrgName(application) {
