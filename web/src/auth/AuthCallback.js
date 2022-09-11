@@ -34,7 +34,6 @@ function post(path, params, method = "post") {
     hiddenField.type = "hidden";
     hiddenField.name = key;
     hiddenField.value = params[key];
-    console.log(key, params[key]);
 
     form.appendChild(hiddenField);
   });
