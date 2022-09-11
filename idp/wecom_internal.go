@@ -19,6 +19,7 @@ import (
 	"fmt"
 	"io"
 	"net/http"
+	"strings"
 	"time"
 
 	"golang.org/x/oauth2"
@@ -157,9 +158,17 @@ func (idp *WeComInternalIdProvider) GetUserInfo(token *oauth2.Token) (*UserInfo,
 	if infoResp.Errcode != 0 {
 		return nil, fmt.Errorf("userInfoResp.errcode = %d, userInfoResp.errmsg = %s", infoResp.Errcode, infoResp.Errmsg)
 	}
+
+	username := infoResp.Name
+
+	if infoResp.Email != "" {
+		if emailPrefix := strings.Split(infoResp.Email, "@")[0]; emailPrefix != "" {
+			username = emailPrefix
+		}
+	}
 	userInfo := UserInfo{
 		Id:          infoResp.UserId,
-		Username:    infoResp.Name,
+		Username:    username,
 		DisplayName: infoResp.Name,
 		Email:       infoResp.Email,
 		AvatarUrl:   infoResp.Avatar,

@@ -23,6 +23,10 @@ import (
 	"github.com/golang-jwt/jwt/v4"
 )
 
+func init() {
+	jwt.MarshalSingleStringAsArray = false
+}
+
 type Claims struct {
 	*User
 	Nonce string `json:"nonce,omitempty"`

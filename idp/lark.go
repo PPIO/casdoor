@@ -182,10 +182,18 @@ func (idp *LarkIdProvider) GetUserInfo(token *oauth2.Token) (*UserInfo, error) {
 		return nil, err
 	}
 
+	username := larkUserInfo.Data.Name
+
+	if larkUserInfo.Data.Email != "" {
+		if emailPrefix := strings.Split(larkUserInfo.Data.Email, "@")[0]; emailPrefix != "" {
+			username = emailPrefix
+		}
+	}
+
 	userInfo := UserInfo{
 		Id:          larkUserInfo.Data.OpenId,
-		DisplayName: larkUserInfo.Data.EnName,
-		Username:    larkUserInfo.Data.Name,
+		DisplayName: larkUserInfo.Data.Name,
+		Username:    username,
 		Email:       larkUserInfo.Data.Email,
 		AvatarUrl:   larkUserInfo.Data.AvatarUrl,
 	}

@@ -37,20 +37,45 @@ spec:
     spec:
       containers:
         - name: casdoor-container
-          image: casbin/casdoor:latest
-          imagePullPolicy: Always
+          image: registry.cn-hangzhou.aliyuncs.com/pai-platform/casdoor:20220629-v1.62.0-2-gb7efbf-dirty
+          imagePullPolicy: IfNotPresent
           ports:
             - containerPort: 8000
-          volumeMounts:
-            # the mounted directory path in THE CONTAINER
-            - mountPath: /conf
-              name: conf
-          env:       
+          resources:
+            limits:
+              cpu: 500m
+              memory: 200M
+          env:
             - name: RUNNING_IN_DOCKER
-              value: "true"
-      #if you want to deploy this in real prod env, consider the config map
-      volumes:
-        - name: conf
-          hostPath:
-            #EDIT IT: the mounted directory path in THE HOST
-            path: /conf
+              value: 'false'
+            - name: appname
+              value: casdoor
+            - name: httpport
+              value: '8000'
+            - name: runmode
+              value: dev
+            - name: SessionOn
+              value: 'true'
+            - name: copyrequestbody
+              value: 'true'
+            - name: driverName
+              value: mysql
+            - name: dataSourceName
+              value: 'casdoor:UO7tD8rKf11Z@tcp(rm-bp13bojp0sh66osf4.mysql.rds.aliyuncs.com:3306)/'
+            - name: dbName
+              value: casdoor
+            - name: showSql
+              value: 'true'
+        - name: mysql
+          image: mysql:latest
+          imagePullPolicy: IfNotPresent
+          resources:
+            limits:
+              cpu: 500m
+              memory: 400M
+          ports:
+            - containerPort: 3306
+          env:
+            - name: MYSQL_ROOT_PASSWORD
+              value: '123456'
+        - name: 

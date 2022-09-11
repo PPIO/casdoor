@@ -104,6 +104,7 @@ func UploadUsers(owner string, fileId string) bool {
 			LastSigninIp:      parseLineItem(&line, 39),
 			Ldap:              "",
 			Properties:        map[string]string{},
+			Wecom:             parseLineItem(&line, 40),
 		}
 
 		if _, ok := oldUserMap[user.GetId()]; !ok {

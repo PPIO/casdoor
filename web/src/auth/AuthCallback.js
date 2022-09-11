@@ -21,6 +21,27 @@ import {authConfig} from "./Auth";
 import * as Setting from "../Setting";
 import i18next from "i18next";
 
+function post(path, params, method = "post") {
+
+  // The rest of this code assumes you are not using a library.
+  // It can be made less verbose if you use one.
+  const form = document.createElement("form");
+  form.method = method;
+  form.action = path;
+
+  Object.keys(params).forEach((key) => {
+    const hiddenField = document.createElement("input");
+    hiddenField.type = "hidden";
+    hiddenField.name = key;
+    hiddenField.value = params[key];
+
+    form.appendChild(hiddenField);
+  });
+
+  document.body.appendChild(form);
+  form.submit();
+}
+
 class AuthCallback extends React.Component {
   constructor(props) {
     super(props);
@@ -127,9 +148,12 @@ class AuthCallback extends React.Component {
             const code = res.data;
             Setting.goToLink(`${oAuthParams.redirectUri}${concatChar}code=${code}&state=${oAuthParams.state}`);
             // Util.showMessage("success", `Authorization code: ${res.data}`);
-          } else if (responseType === "token" || responseType === "id_token") {
+          } else if (responseType === "token") {
             const token = res.data;
             Setting.goToLink(`${oAuthParams.redirectUri}${concatChar}${responseType}=${token}&state=${oAuthParams.state}&token_type=bearer`);
+          } else if (responseType === "id_token") {
+            const token = res.data;
+            post(oAuthParams.redirectUri, {id_token: token});
           } else if (responseType === "link") {
             const from = innerParams.get("from");
             Setting.goToLinkSoft(this, from);
